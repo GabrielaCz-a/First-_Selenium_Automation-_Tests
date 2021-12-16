@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+	<head>
+	<title>Moja strona</title>
+	<style>
+		input[type=text] {
+		width: 30%;
+		padding: 10px 18px;
+		margin: 8px 0;
+		box-sizing: border-box;
+		border-radius: 2px
+		}
+		textarea {
+		width: 40%;
+		height: 150px;
+		padding: 12px 20px;
+		box-sizing: border-box;
+		border: 2px solid #ccc;
+		border-radius: 2px;
+		background-color: #f8f8f8;
+		font-size: 16px;
+		margin: 8px 0;
+		}
+		input[type=checkbox] {
+		padding-left: 100px;
+		margin: 8px 0;
+		border-radius: 2px
+		}
+		button {
+		padding-center: 32px 64px;
+		margin: 8px 0;
+		border-radius: 2px
+		}
+	</style>
+	</head>
+		<body>
+			<h1>Formularz kontaktowy</h1>
+			<form>
+				<label for="imię"> Imię: </label><br>
+				<input type="text" id="imię" name="imię" minlength="3" maxlength="25" required><br>
+				<label for="nazwisko"> Nazwisko: </label><br>
+				<input type="text" id="nazwisko" name="nazwisko" minlength="3" maxlength="50" required><br>
+				<label for="ntelefonu"> Numer telefonu: </label><br>
+				<input type="text" id="ntelefonu" name="numer telefonu" placeholder="XXX-XXX-XXX" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" maxlength="11" required><br>
+				<textarea name="wiadomość" minlength="3" maxlength="150" required>Tutaj wpisz swoją wiadomość</textarea><br>
+				<label for="zgoda">Wyrażam zgodę na przetwarzanie danych w celach marketingowych</label>
+				<input type="checkbox" id="zgoda"><br>
+				<button type="submit" onclick="wyswietlAlert()">Wyślij</button>
+				<script>
+					function wyswietlAlert(){
+					alert("Wysłano");
+					}
+				</script>
+			</form>>
+		</body>
+</html>
