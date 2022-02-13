@@ -1,35 +1,32 @@
 package tests;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.LoginAndRegistrationPage;
 
 import static pages.BasePage.driver;
 
 public class LoginAndRegistrationPageTest {
+    LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
 
-    @BeforeEach
-    public void warmUp() {
+    @BeforeAll
+    public static void warmUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
     @Test
     void shouldLoginWithCorrectData() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.enterCorrectEmailForLogin();
         loginAndRegistrationPage.enterCorrectPassword();
         loginAndRegistrationPage.clickLoginButton();
         Assertions.assertEquals("http://automationpractice.com/index.php?controller=my-account", driver.getCurrentUrl());
+        driver.manage().deleteAllCookies();
     }
 
     @Test
     void shouldNotLoginWithoutAnyData() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.clickLoginButton();
         Assertions.assertEquals("An email address required.", loginAndRegistrationPage.returnErrorLoginMessage());
@@ -37,7 +34,6 @@ public class LoginAndRegistrationPageTest {
 
     @Test
     void shouldNotLoginWithoutPassword() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.enterCorrectEmailForLogin();
         loginAndRegistrationPage.clickLoginButton();
@@ -46,7 +42,6 @@ public class LoginAndRegistrationPageTest {
 
     @Test
     void shouldNotLoginWithoutEmail() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.enterCorrectPassword();
         loginAndRegistrationPage.clickLoginButton();
@@ -55,7 +50,6 @@ public class LoginAndRegistrationPageTest {
 
     @Test
     void shouldNotLoginWithWrongEmail() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.enterWrongEmailForLogin();
         loginAndRegistrationPage.enterCorrectPassword();
@@ -65,7 +59,6 @@ public class LoginAndRegistrationPageTest {
 
     @Test
     void shouldNotLoginWithWrongPassword() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.enterCorrectEmailForLogin();
         loginAndRegistrationPage.enterWrongPassword();
@@ -75,7 +68,6 @@ public class LoginAndRegistrationPageTest {
 
     @Test
     void shouldNotLoginWithEmailWithoutAccount() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.enterUniqueEmailForLogin();
         loginAndRegistrationPage.enterCorrectPassword();
@@ -85,7 +77,6 @@ public class LoginAndRegistrationPageTest {
 
     @Test
     void shouldNotCreateAccountWithWrongEmail() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.enterWrongEmailForCreateAccount();
         loginAndRegistrationPage.clickCreateAccountButton();
@@ -94,7 +85,6 @@ public class LoginAndRegistrationPageTest {
 
     @Test
     void shouldNotCreateAccountWithRegisteredEmail() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.enterRegisteredEmailForCreateAccount();
         loginAndRegistrationPage.clickCreateAccountButton();
@@ -103,7 +93,6 @@ public class LoginAndRegistrationPageTest {
 
     @Test
     void shouldCreateAccountWithCorrectData() {
-        LoginAndRegistrationPage loginAndRegistrationPage = new LoginAndRegistrationPage(driver);
         loginAndRegistrationPage.goToLoginAndRegistrationPage();
         loginAndRegistrationPage.enterUniqueEmailForRegistration();
         loginAndRegistrationPage.clickCreateAccountButton();
@@ -111,8 +100,8 @@ public class LoginAndRegistrationPageTest {
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=authentication&back=my-account#account-creation"));
     }
 
-    @AfterEach
-    public void tearDown() {
+    @AfterAll
+    public static void tearDown() {
         driver.close();
     }
 }

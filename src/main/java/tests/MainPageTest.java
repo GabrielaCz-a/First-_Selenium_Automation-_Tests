@@ -7,32 +7,23 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.MainPage;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static pages.BasePage.driver;
 
 public class MainPageTest {
+    MainPage mainPage = new MainPage(driver);
 
     @BeforeAll
     public static void warmUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    }
-
-    @Test
-    void shouldFindProductsThatExist() {
-        MainPage mainPage = new MainPage(driver);
-        mainPage.goToMainPage();
-        mainPage.enterCorrectSearchKeys();
-        mainPage.clickSearchButton();
-        Assertions.assertEquals("Showing 1 - 4 of 4 items", mainPage.returnTextWithCountOfProducts());
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
     }
 
     @Test
     void shouldNotFindProductWithoutAnyData() {
-        MainPage mainPage = new MainPage(driver);
         mainPage.goToMainPage();
         mainPage.clickSearchButton();
         Assertions.assertEquals("Please enter a search keyword", mainPage.returnErrorMessage());
@@ -40,16 +31,14 @@ public class MainPageTest {
 
     @Test
     void shouldNotFindProductThatDoesNotExist() {
-        MainPage mainPage = new MainPage(driver);
         mainPage.goToMainPage();
         mainPage.enterWrongSearchKeys();
         mainPage.clickSearchButton();
-        Assertions.assertEquals("No results were found for your search \"sjkaidiai\"", mainPage.returnErrorMessage());
+        Assertions.assertTrue(mainPage.returnErrorMessage().contains("No results were found for your search"));
     }
 
     @Test
     void shouldNotFindProductWithTooManyCharacters() {
-        MainPage mainPage = new MainPage(driver);
         mainPage.goToMainPage();
         mainPage.enterTooManySearchKeys();
         mainPage.clickSearchButton();

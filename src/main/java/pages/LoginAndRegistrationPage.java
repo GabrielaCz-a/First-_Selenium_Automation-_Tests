@@ -8,36 +8,38 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class LoginAndRegistrationPage extends BasePage {
     public LoginAndRegistrationPage(WebDriver driver) {
         super(driver);
     }
 
     @FindBy(linkText = "Sign in")
-    WebElement signInButton;
+    private WebElement signInButton;
     @FindBy(id = "email")
-    WebElement emailInputForLogin;
+    private WebElement emailInputForLogin;
     @FindBy(id = "passwd")
-    WebElement passwordInput;
+    private WebElement passwordInput;
     @FindBy(css = "#SubmitLogin > span")
-    WebElement loginButton;
+    private WebElement loginButton;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div[1]/ol/li")
-    WebElement errorLoginMessage;
+    private WebElement errorLoginMessage;
     @FindBy(id = "email_create")
-    WebElement emailInputForCreateAccount;
+    private WebElement emailInputForCreateAccount;
     @FindBy(name = "SubmitCreate")
-    WebElement createAccountButton;
+    private WebElement createAccountButton;
     @FindBy(xpath = "//*[@id=\"create_account_error\"]/ol/li")
-    WebElement errorCreateAccountMessage;
+    private WebElement errorCreateAccountMessage;
 
     Faker faker = new Faker();
-    String correctPassword = "12345";
-    String correctEmail = "klient@niepodam.pl";
-    String wrongPassword = "1234";
-    String wrongEmail = "klientniepodam.pl";
-    String uniqueEmail = faker.name().firstName() + faker.name().lastName() + faker.random().nextInt(10000) + "@gmail.com";
+    final String correctPassword = "12345";
+    final String correctEmail = "klient@niepodam.pl";
+    final String wrongPassword = "1234";
+    final String wrongEmail = "klientniepodam.pl";
+    final String uniqueEmail = faker.name().firstName() + faker.name().lastName() + faker.random().nextInt(10000) + "@gmail.com";
 
-    Wait wait = new WebDriverWait(driver, 5000);
+    Wait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
 
     public void goToLoginAndRegistrationPage() {
         goToMainPage();
@@ -92,13 +94,11 @@ public class LoginAndRegistrationPage extends BasePage {
 
     public String returnErrorLoginMessage() {
         wait.until(ExpectedConditions.visibilityOf(errorLoginMessage));
-        String textOfErrorMessage = errorLoginMessage.getText();
-        return textOfErrorMessage;
+        return errorLoginMessage.getText();
     }
 
     public String returnErrorCreateAccountMessage() {
         wait.until(ExpectedConditions.visibilityOf(errorCreateAccountMessage));
-        String textOfErrorMessage = errorCreateAccountMessage.getText();
-        return textOfErrorMessage;
+        return errorCreateAccountMessage.getText();
     }
 }

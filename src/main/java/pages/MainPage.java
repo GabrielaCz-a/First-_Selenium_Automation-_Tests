@@ -5,28 +5,26 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 public class MainPage extends BasePage {
     public MainPage(WebDriver driver) {
         super(driver);
     }
 
     @FindBy(id = "search_query_top")
-    WebElement searchInput;
+    private WebElement searchInput;
     @FindBy(name = "submit_search")
-    WebElement searchButton;
+    private WebElement searchButton;
     @FindBy(xpath = "//*[@id=\"center_column\"]/p")
-    WebElement errorMessage;
-    @FindBy(className = "product-count")
-    WebElement countOfProducts;
+    private WebElement errorMessage;
 
     LoremIpsum lorem = LoremIpsum.getInstance();
 
-    public void enterCorrectSearchKeys() {
-        searchInput.sendKeys("summer dresses");
-    }
-
     public void enterWrongSearchKeys() {
-        searchInput.sendKeys("sjkaidiai");
+        searchInput.sendKeys("dcicn");
     }
 
     public void enterTooManySearchKeys() {
@@ -37,13 +35,7 @@ public class MainPage extends BasePage {
         searchButton.click();
     }
 
-    public String returnTextWithCountOfProducts() {
-        String textWithCountOfProducts = countOfProducts.getText();
-        return textWithCountOfProducts;
-    }
-
     public String returnErrorMessage() {
-        String textOfErrorMessage = errorMessage.getText();
-        return textOfErrorMessage;
+        return errorMessage.getText();
     }
 }

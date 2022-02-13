@@ -8,10 +8,9 @@ public class BasePage {
     String mainPageUrl = "http://automationpractice.com";
 
     BasePage(WebDriver driver) {
-        this.driver = driver;
+        BasePage.driver = driver;
         PageFactory.initElements(driver, this);
     }
-
     public void goToMainPage() {
         driver.get(mainPageUrl);
     }

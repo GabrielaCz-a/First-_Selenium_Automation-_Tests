@@ -2,11 +2,13 @@ package pages;
 
 import com.github.javafaker.Faker;
 import com.thedeanda.lorem.LoremIpsum;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -16,46 +18,31 @@ public class ContactUsPage extends BasePage {
     }
 
     @FindBy(id = "contact-link")
-    WebElement contactUsButton;
+    private WebElement contactUsButton;
     @FindBy(id = "id_contact")
-    WebElement subjectHeadingDropDown;
+    private WebElement subjectHeadingDropDown;
     @FindBy(id = "email")
-    WebElement emailInput;
+    private WebElement emailInput;
     @FindBy(id = "id_order")
-    WebElement orderReferenceInput;
+    private WebElement orderReferenceInput;
     @FindBy(id = "fileUpload")
-    WebElement uploadFileInput;
+    private WebElement uploadFileInput;
     @FindBy(id = "message")
-    WebElement messageTextArea;
+    private WebElement messageTextArea;
     @FindBy(id = "submitMessage")
-    WebElement sendButton;
+    private WebElement sendButton;
     @FindBy(xpath = "//*[@id=\"center_column\"]/p")
-    WebElement successMessage;
+    private WebElement successMessage;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li")
-    WebElement errorMessage;
+    private WebElement errorMessage;
 
     Faker faker = new Faker();
     LoremIpsum lorem = LoremIpsum.getInstance();
 
-    Wait<WebDriver> wait;
+    Wait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
 
-    {
-        wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(Duration.ofSeconds(10))
-                .pollingEvery(Duration.ofSeconds(5))
-                .ignoring(NoSuchElementException.class);
-    }
-
-
-    int[] valueOfSubjectHeadingDropDown = {0, 1, 2};
-
-    WebElement upload_file = uploadFileInput;
-    String pathToCorrectAttachment = "C:\\Users\\User\\IdeaProjects\\FinalProjectSoftieRefactor\\src\\main\\resources\\uploadCorrectFile.pdf";
-    String pathToWrongAttachment = "C:\\Users\\User\\IdeaProjects\\FinalProjectSoftieRefactor\\src\\main\\resources\\uploadWrongFile.html";
-
-    String correctEmail = faker.name().firstName() + faker.name().lastName() + faker.random().nextInt(10000) + "@gmail.com";
-    String wrongEmail = faker.name().firstName() + faker.name().lastName() + faker.random().nextInt(10000) + "gmail.com";
-
+    final String correctEmail = faker.name().firstName() + faker.name().lastName() + faker.random().nextInt(10000) + "@gmail.com";
+    final String wrongEmail = faker.name().firstName() + faker.name().lastName() + faker.random().nextInt(10000) + "gmail.com";
 
     public void goToContactUsPage() {
         goToMainPage();
@@ -66,7 +53,7 @@ public class ContactUsPage extends BasePage {
 
     public void selectSubjectHeading() {
         Select subjectHeading = new Select(subjectHeadingDropDown);
-        subjectHeading.selectByIndex(valueOfSubjectHeadingDropDown[1]);
+        subjectHeading.selectByIndex(1);
     }
 
     public void enterCorrectEmail() {
@@ -81,12 +68,12 @@ public class ContactUsPage extends BasePage {
         orderReferenceInput.sendKeys(String.valueOf(faker.number().randomNumber()));
     }
 
-    public void sendCorrectAttachment() {
-        upload_file.sendKeys(pathToCorrectAttachment);
+    public void sendAttachmentWithCorrectFileType() {
+      uploadFileInput.sendKeys(System.getProperty("user.dir") + "/src/main/resources/uploadCorrectFile.pdf");
     }
 
-    public void sendWrongAttachment() {
-        upload_file.sendKeys(pathToWrongAttachment);
+    public void sendAttachmentWithIncorrectFileType() {
+       uploadFileInput.sendKeys(System.getProperty("user.dir") + "/src/main/resources/uploadWrongFile.html");
     }
 
     public void enterMessage() {
@@ -99,13 +86,11 @@ public class ContactUsPage extends BasePage {
 
     public String returnSuccessMessage() {
         wait.until(ExpectedConditions.visibilityOf(successMessage));
-        String textOfSuccessMessage = successMessage.getText();
-        return textOfSuccessMessage;
+        return successMessage.getText();
     }
 
     public String returnErrorMessage() {
         wait.until(ExpectedConditions.visibilityOf(errorMessage));
-        String textOfErrorMessage = errorMessage.getText();
-        return textOfErrorMessage;
+        return errorMessage.getText();
     }
 }

@@ -10,65 +10,66 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class CreateAccountFormPage extends LoginAndRegistrationPage {
     public CreateAccountFormPage(WebDriver driver) {
         super(driver);
     }
 
     @FindBy(id = "customer_firstname")
-    WebElement firstNameInput;
+    private WebElement firstNameInput;
     @FindBy(id = "customer_lastname")
-    WebElement lastNameInput;
+    private WebElement lastNameInput;
     @FindBy(id = "address1")
-    WebElement addressInput;
+    private WebElement addressInput;
     @FindBy(id = "address2")
-    WebElement addressNextLineInput;
+    private WebElement addressNextLineInput;
     @FindBy(id = "company")
-    WebElement companyInput;
+    private WebElement companyInput;
     @FindBy(id = "days")
-    WebElement daysDropDown;
+    private WebElement daysDropDown;
     @FindBy(id = "months")
-    WebElement monthsDropdown;
+    private WebElement monthsDropdown;
     @FindBy(id = "years")
-    WebElement yearsDropDown;
+    private WebElement yearsDropDown;
     @FindBy(id = "city")
-    WebElement cityInput;
+    private WebElement cityInput;
     @FindBy(id = "id_state")
-    WebElement stateDropDown;
+    private WebElement stateDropDown;
     @FindBy(id = "postcode")
-    WebElement postalCodeInput;
+    private WebElement postalCodeInput;
     @FindBy(id = "phone")
-    WebElement phone;
+    private WebElement phone;
     @FindBy(id = "phone_mobile")
-    WebElement mobilePhoneInput;
+    private WebElement mobilePhoneInput;
     @FindBy(id = "other")
-    WebElement additionalInformationTextArea;
+    private WebElement additionalInformationTextArea;
     @FindBy(id = "alias")
-    WebElement aliasInput;
+    private WebElement aliasInput;
     @FindBy(id = "submitAccount")
-    WebElement registerButton;
+    private WebElement registerButton;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[1]")
-    WebElement firstErrorMessage;
+    private WebElement firstErrorMessage;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[2]")
-    WebElement secondErrorMessage;
+    private WebElement secondErrorMessage;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[3]")
-    WebElement thirdErrorMessage;
+    private WebElement thirdErrorMessage;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[4]")
-    WebElement fourthErrorMessage;
+    private WebElement fourthErrorMessage;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[5]")
-    WebElement fifthErrorMessage;
+    private WebElement fifthErrorMessage;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[6]")
-    WebElement sixthErrorMessage;
+    private WebElement sixthErrorMessage;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[7]")
-    WebElement seventhErrorMessage;
+    private WebElement seventhErrorMessage;
     @FindBy(xpath = "//*[@id=\"center_column\"]/div/ol/li[8]")
-    WebElement eighthErrorMessage;
+    private WebElement eighthErrorMessage;
 
     Faker faker = new Faker();
     LoremIpsum lorem = LoremIpsum.getInstance();
 
-
-    Wait wait = new WebDriverWait(driver, 5000);
+    Wait wait = new WebDriverWait(driver, Duration.ofSeconds(8));
 
     public void goToCreateAccountForm() {
         goToLoginAndRegistrationPage();
@@ -141,11 +142,11 @@ public class CreateAccountFormPage extends LoginAndRegistrationPage {
     }
 
     public void enterCorrectPostalCode() {
-        postalCodeInput.sendKeys(String.valueOf(faker.number().numberBetween(00000, 99999)));
+        postalCodeInput.sendKeys(String.valueOf(faker.number().numberBetween(10000, 99999)));
     }
 
     public void enterWrongPostalCode() {
-        postalCodeInput.sendKeys(String.valueOf(faker.number().numberBetween(0000, 9999)));
+        postalCodeInput.sendKeys(String.valueOf(faker.number().numberBetween(1000, 9999)));
     }
 
     public void enterTooManyCharactersInAdditionalInformation() {
@@ -178,43 +179,35 @@ public class CreateAccountFormPage extends LoginAndRegistrationPage {
 
     public String returnFirstErrorMessage() {
         wait.until(ExpectedConditions.visibilityOf(firstErrorMessage));
-        String textOfFirstErrorMessage = firstErrorMessage.getText();
-        return textOfFirstErrorMessage;
+        return firstErrorMessage.getText();
     }
 
     public String returnSecondErrorMessage() {
-        String textOfSecondErrorMessage = secondErrorMessage.getText();
-        return textOfSecondErrorMessage;
+        return secondErrorMessage.getText();
     }
 
     public String returnThirdErrorMessage() {
-        String textOfThirdErrorMessage = thirdErrorMessage.getText();
-        return textOfThirdErrorMessage;
+        return thirdErrorMessage.getText();
     }
 
     public String returnFourthErrorMessage() {
-        String textOfFourthErrorMessage = fourthErrorMessage.getText();
-        return textOfFourthErrorMessage;
+        return fourthErrorMessage.getText();
     }
 
     public String returnFifthErrorMessage() {
-        String textOfFifthErrorMessage = fifthErrorMessage.getText();
-        return textOfFifthErrorMessage;
+        return fifthErrorMessage.getText();
     }
 
     public String returnSixthErrorMessage() {
-        String textOfSixthErrorMessage = sixthErrorMessage.getText();
-        return textOfSixthErrorMessage;
+        return sixthErrorMessage.getText();
     }
 
     public String returnSeventhErrorMessage() {
-        String textOfSeventhErrorMessage = seventhErrorMessage.getText();
-        return textOfSeventhErrorMessage;
+        return seventhErrorMessage.getText();
     }
 
     public String returnEighthErrorMessage() {
-        String textOfEighthErrorMessage = eighthErrorMessage.getText();
-        return textOfEighthErrorMessage;
+        return eighthErrorMessage.getText();
     }
 }
 

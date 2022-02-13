@@ -21,6 +21,6 @@ Tests includes:
 * Locators (cssSelector, xpath, id, name, className etc.)
 * Select options
 * Upload files
-* Waits (implicit wait, explicit wait, fluent wait)
+* Waits (implicit wait, explicit wait)
 * Assertions
 * Data generators (Faker, Lorem Ipsum) 

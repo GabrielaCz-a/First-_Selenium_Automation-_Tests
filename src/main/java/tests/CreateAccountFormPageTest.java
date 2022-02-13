@@ -1,25 +1,22 @@
 package tests;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.CreateAccountFormPage;
 
 import static pages.BasePage.driver;
 
 public class CreateAccountFormPageTest {
+    CreateAccountFormPage createAccountFormPage = new CreateAccountFormPage(driver);
 
-    @BeforeEach
-    public void warmUp() {
+    @BeforeAll
+    public static void warmUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
     @Test
     public void shouldCreateNewAccountWithCorrectDataInForm() {
-        CreateAccountFormPage createAccountFormPage = new CreateAccountFormPage(driver);
         createAccountFormPage.goToCreateAccountForm();
         createAccountFormPage.enterCorrectFirstName();
         createAccountFormPage.enterCorrectLastName();
@@ -32,11 +29,11 @@ public class CreateAccountFormPageTest {
         createAccountFormPage.enterAlias();
         createAccountFormPage.clickRegisterButton();
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=my-account"));
+        driver.manage().deleteAllCookies();
     }
 
     @Test
     void shouldNotCreateAccountWithoutAnyDataInForm() {
-        CreateAccountFormPage createAccountFormPage = new CreateAccountFormPage(driver);
         createAccountFormPage.goToCreateAccountForm();
         createAccountFormPage.clickRegisterButton();
         Assertions.assertEquals("You must register at least one phone number.", createAccountFormPage.returnFirstErrorMessage());
@@ -51,7 +48,6 @@ public class CreateAccountFormPageTest {
 
     @Test
     void shouldNotCreateAccountWithWrongDataInForm() {
-        CreateAccountFormPage createAccountFormPage = new CreateAccountFormPage(driver);
         createAccountFormPage.goToCreateAccountForm();
         createAccountFormPage.enterWrongFirstName();
         createAccountFormPage.enterWrongLastName();
@@ -77,7 +73,6 @@ public class CreateAccountFormPageTest {
 
     @Test
     void shouldNotCreateAccountWithTooManyCharactersInInputs() {
-        CreateAccountFormPage createAccountFormPage = new CreateAccountFormPage(driver);
         createAccountFormPage.goToCreateAccountForm();
         createAccountFormPage.enterTooManyCharactersInFirstName();
         createAccountFormPage.enterTooManyCharactersInLastName();
@@ -103,8 +98,8 @@ public class CreateAccountFormPageTest {
 
     }
 
-    @AfterEach
-    public void teardown() {
-        driver.close();
+    @AfterAll
+    public static void teardown() {
+        driver.quit();
     }
 }
