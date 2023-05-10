@@ -1,7 +1,6 @@
 # First_Selenium_Automation_Tests
 ## Introduction
 This project  includes my first automation tests performed on the site [http://automationpractice.com](http://automationpractice.com) (on the Chrome browser). 
-It is a **final project** of the course "Software Tester with an introduction to automation" organized by Softie.pl. 
 All tests were prepared using **Page Object Model and Page Factory.**
 
 ## Technologies
