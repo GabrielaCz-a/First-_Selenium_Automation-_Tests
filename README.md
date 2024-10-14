@@ -1,7 +1,7 @@
 # First_Selenium_Automation_Tests
 ## Introduction
 This project  includes my first automation tests performed on the site [http://automationpractice.com](http://automationpractice.com) (on the Chrome browser). 
-All tests were prepared using **Page Object Model and Page Factory.**
+All tests were prepared using **Page Object Model and Page Factory.** 
 
 ## Technologies
 Project is created with:
