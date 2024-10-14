@@ -23,3 +23,6 @@ Tests includes:
 * Waits (implicit wait, explicit wait)
 * Assertions
 * Data generators (Faker, Lorem Ipsum) 
+
+
+To review code you have to press the **"View on Github"** button ( or use this [**link**](https://github.com/GabrielaCz-a/First_Selenium_Automation_Tests) if you are using a mobile device with a resolution of 480 px and below )
